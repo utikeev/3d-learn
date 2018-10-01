@@ -2,7 +2,6 @@ package learn3d.utils.plot
 
 import org.knowm.xchart.CategoryChart
 import org.knowm.xchart.CategoryChartBuilder
-import javax.swing.JSlider
 
 class HistogramWithSliders(
         private val mapFunction: (x: Number, params: Map<String, Number>) -> Double,

@@ -44,8 +44,8 @@ class Matrix44Test: StringSpec({
     "Numbers constructor" {
         val a = 1; val b = 2; val c = 3; val d = 4
         val e = 5; val f = 6; val g = 7; val h = 8
-        val i = -8; val j = -7; val k = -6; val l = -5;
-        val m = -4; val n = -3; val o = -2; val p = -1;
+        val i = -8; val j = -7; val k = -6; val l = -5
+        val m = -4; val n = -3; val o = -2; val p = -1
         val tm = Matrix44(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p)
         tm[0][0] eq a.toDouble() shouldBe true
         tm[0][1] eq b.toDouble() shouldBe true

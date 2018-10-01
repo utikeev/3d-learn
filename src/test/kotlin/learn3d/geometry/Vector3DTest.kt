@@ -1,7 +1,6 @@
 package learn3d.geometry
 
 import io.kotlintest.inspectors.forAll
-import io.kotlintest.matchers.plusOrMinus
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 import kotlin.math.sqrt
@@ -110,7 +109,7 @@ class Vector3DTest: StringSpec({
         v1 * tm shouldBe Vector3D(-8, 4.5, 2.75)
     }
 
-    "Vectimes matrix" {
+    "VecTimes matrix" {
         v1 vecTimes tm shouldBe Vector3D(38, -13, -7)
         vecTimes(v1, tm) shouldBe Vector3D(38, -13, -7)
     }

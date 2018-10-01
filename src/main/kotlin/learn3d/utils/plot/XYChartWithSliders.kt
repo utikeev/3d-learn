@@ -2,7 +2,6 @@ package learn3d.utils.plot
 
 import org.knowm.xchart.QuickChart
 import org.knowm.xchart.XYChart
-import javax.swing.JSlider
 import kotlin.math.pow
 
 class XYChartWithSliders(

@@ -167,7 +167,7 @@ class Matrix44 {
             }
         }
 
-        return res;
+        return res
     }
 
     fun inverse(): Matrix44 {
