@@ -1,5 +1,6 @@
 package learn3d.probability
 
+import learn3d.utils.plot.HistogramWithSliders
 import kotlin.math.pow
 
 fun fact(n: Long) = when {
@@ -24,6 +25,6 @@ fun main(args: Array<String>) {
         val p = 1.0 / 2
         bin(n, i.toLong()) * p.pow(i.toInt()) * (1 - p).pow((n - i.toInt()).toDouble())
     }
-    val g2 = HistogramWithSliders("Bernoulli", mFun2, listOf(), mutableMapOf())
+    val g2 = HistogramWithSliders(mFun2, "Bernoulli")
     g2.show()
 }
