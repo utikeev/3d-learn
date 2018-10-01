@@ -13,14 +13,14 @@ class DoubleJSlider(private val center: Number,
                 initialValue) {
     override val scaledValue: Double
         get() {
-            return scaleSlider(super.getValue(), center, range)
+            return doubleScaleSlider(super.getValue(), center, range)
         }
 
     init {
         majorTickSpacing = 20
         labelTable = Hashtable<Int, JLabel>((1..101 step 20).map
         { it ->
-            val label = scaleSlider(it, center, range)
+            val label = doubleScaleSlider(it, center, range)
             it to JLabel(DecimalFormat("#.##").format(label))
         }.toMap())
     }

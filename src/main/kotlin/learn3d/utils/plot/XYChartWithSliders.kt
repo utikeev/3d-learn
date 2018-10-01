@@ -35,12 +35,14 @@ class XYChartWithSliders(
                 initialValue = params["range"]!!.toInt(),
                 integerValues = true)
         addSlider(rangeSlider)
-        params["point"] = 50
+        params["point"] = 400
         val pointSlider = SliderWrapper(
                 { event ->
                     val src = event.source as ScaledSlider
                     params["point"] = src.scaledValue
                 },
+                600,
+                500,
                 name = "Points",
                 initialValue = params["point"]!!.toInt(),
                 integerValues = true)

@@ -1,6 +1,10 @@
 package learn3d.utils.plot
 
-fun scaleSlider(value: Number, center: Number, range: Number, oldCenter: Number = 50): Double {
+fun intScaleSlider(value: Number, center: Number, range: Number): Int {
+    return value.toInt() - 1 + center.toInt() - range.toInt()
+}
+
+fun doubleScaleSlider(value: Number, center: Number, range: Number, oldCenter: Number = 50): Double {
     return (value.toDouble() - oldCenter.toDouble()) / oldCenter.toDouble() * range.toDouble() + center.toDouble()
 }
 
