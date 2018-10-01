@@ -20,14 +20,15 @@ class HistogramWithSliders(
         chart.addSeries(seriesName, listOf(0), listOf(0))
         params["range"] = 10
         val rangeSlider = SliderWrapper(
-                1,
-                20,
-                "Range",
                 { event ->
                     val src = event.source as JSlider
                     params["range"] = src.value.toLong()
                 },
-                5)
+                10,
+                9,
+                "Range",
+                5,
+                true)
         addSlider(rangeSlider)
     }
 

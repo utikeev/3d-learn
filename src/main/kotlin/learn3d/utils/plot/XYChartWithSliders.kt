@@ -3,6 +3,7 @@ package learn3d.utils.plot
 import org.knowm.xchart.QuickChart
 import org.knowm.xchart.XYChart
 import javax.swing.JSlider
+import kotlin.math.pow
 
 class XYChartWithSliders(
         private val mapFunction: (x: Number, params: Map<String, Number>) -> Double,
@@ -25,28 +26,38 @@ class XYChartWithSliders(
         }
 
     init {
-        params["range"] = 10
+        params["range"] = 50
         val rangeSlider = SliderWrapper(
-                1,
-                100,
-                "Range",
                 { event ->
                     val src = event.source as JSlider
                     params["range"] = src.value
                 },
-                params["range"]!!.toInt())
+                name = "Range",
+                initialValue = params["range"]!!.toInt(),
+                integerValues = true)
         addSlider(rangeSlider)
-        params["point"] = 10
+        params["point"] = 50
         val pointSlider = SliderWrapper(
-                1,
-                100,
-                "Points",
                 { event ->
                     val src = event.source as JSlider
                     params["point"] = src.value
                 },
-                params["point"]!!.toInt())
+                name = "Points",
+                initialValue = params["point"]!!.toInt(),
+                integerValues = true)
         addSlider(pointSlider)
+        val ySlider = SliderWrapper(
+                { event ->
+                    val src = event.source as JSlider
+                    chart.styler.yAxisMax = 10.0.pow(src.value)
+                    chart.styler.yAxisMin = -(10.0.pow(src.value))
+                },
+                3,
+                10,
+                "Y restriction",
+                3
+        )
+        addSlider(ySlider)
     }
 
     override fun updateChart() {
