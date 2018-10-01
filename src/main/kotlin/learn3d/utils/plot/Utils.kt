@@ -4,10 +4,14 @@ fun intScaleSlider(value: Number, center: Number, range: Number): Int {
     return value.toInt() - 1 + center.toInt() - range.toInt()
 }
 
-fun doubleScaleSlider(value: Number, center: Number, range: Number, oldCenter: Number = 50): Double {
-    return (value.toDouble() - oldCenter.toDouble()) / oldCenter.toDouble() * range.toDouble() + center.toDouble()
+fun doubleScaleSlider(value: Number, center: Number, range: Number): Double {
+    val oldRange = 100
+    val newRange = range.toDouble() * 2
+    return ((value.toDouble() - 1) * newRange) / oldRange + (center.toDouble() - range.toDouble())
 }
 
-fun unscaleSlider(value: Number, center: Number, range: Number, oldCenter: Number = 50): Int {
-    return ((oldCenter.toDouble() * (value.toDouble() - center.toDouble())) / range.toDouble() + oldCenter.toDouble()).toInt()
+fun unscaleSlider(value: Number, center: Number, range: Number): Int {
+    val oldRange = 100
+    val newRange = range.toDouble() * 2
+    return (oldRange * (value.toDouble() - center.toDouble() + range.toDouble()) / newRange).toInt() + 1
 }
