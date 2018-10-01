@@ -3,16 +3,15 @@ package learn3d.utils.plot
 import java.text.DecimalFormat
 import java.util.*
 import javax.swing.JLabel
-import javax.swing.JSlider
 
 
 class DoubleJSlider(private val center: Number,
                     private val range: Number,
                     initialValue: Int):
-        JSlider(1,
+        ScaledSlider(1,
                 101,
                 initialValue) {
-    val value: Double
+    override val scaledValue: Double
         get() {
             return scaleSlider(super.getValue(), center, range)
         }

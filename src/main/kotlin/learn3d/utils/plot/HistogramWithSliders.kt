@@ -21,8 +21,8 @@ class HistogramWithSliders(
         params["range"] = 10
         val rangeSlider = SliderWrapper(
                 { event ->
-                    val src = event.source as JSlider
-                    params["range"] = src.value.toLong()
+                    val src = event.source as ScaledSlider
+                    params["range"] = src.scaledValue.toLong()
                 },
                 10,
                 9,

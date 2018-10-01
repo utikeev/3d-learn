@@ -29,8 +29,8 @@ class XYChartWithSliders(
         params["range"] = 50
         val rangeSlider = SliderWrapper(
                 { event ->
-                    val src = event.source as JSlider
-                    params["range"] = src.value
+                    val src = event.source as ScaledSlider
+                    params["range"] = src.scaledValue
                 },
                 name = "Range",
                 initialValue = params["range"]!!.toInt(),
@@ -39,8 +39,8 @@ class XYChartWithSliders(
         params["point"] = 50
         val pointSlider = SliderWrapper(
                 { event ->
-                    val src = event.source as JSlider
-                    params["point"] = src.value
+                    val src = event.source as ScaledSlider
+                    params["point"] = src.scaledValue
                 },
                 name = "Points",
                 initialValue = params["point"]!!.toInt(),
@@ -48,9 +48,9 @@ class XYChartWithSliders(
         addSlider(pointSlider)
         val ySlider = SliderWrapper(
                 { event ->
-                    val src = event.source as JSlider
-                    chart.styler.yAxisMax = 10.0.pow(src.value)
-                    chart.styler.yAxisMin = -(10.0.pow(src.value))
+                    val src = event.source as ScaledSlider
+                    chart.styler.yAxisMax = 10.0.pow(src.scaledValue.toDouble())
+                    chart.styler.yAxisMin = -(10.0.pow(src.scaledValue.toDouble()))
                 },
                 3,
                 10,
