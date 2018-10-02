@@ -7,10 +7,10 @@ import javax.swing.JLabel
 
 class DoubleJSlider(private val center: Number,
                     private val range: Number,
-                    initialValue: Int):
+                    initialValue: Number):
         ScaledSlider(1,
                 101,
-                initialValue) {
+                unscaleSlider(initialValue, center, range)) {
     override val scaledValue: Double
         get() {
             return doubleScaleSlider(super.getValue(), center, range)

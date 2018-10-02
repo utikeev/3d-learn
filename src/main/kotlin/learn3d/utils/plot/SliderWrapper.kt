@@ -11,7 +11,7 @@ class SliderWrapper(changeListener: (event: ChangeEvent) -> Unit,
                     integerValues: Boolean = false) {
     val slider: JSlider =
             if (integerValues) IntegerJSlider (center, range, initialValue)
-            else DoubleJSlider(center, range, unscaleSlider(initialValue, center, range))
+            else DoubleJSlider(center, range, initialValue)
 
     init {
         slider.addChangeListener(changeListener)
