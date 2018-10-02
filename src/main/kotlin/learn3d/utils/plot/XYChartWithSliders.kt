@@ -19,7 +19,7 @@ class XYChartWithSliders(
             val l = mutableListOf<Double>()
             while (i <= params["range"]!!.toDouble() / 2) {
                 l.add(i)
-                i += params["range"]!!.toDouble() / params["point"]!!.toDouble()
+                i += (params["range"]!!.toDouble() + 1) / params["point"]!!.toDouble()
             }
             return l
         }
