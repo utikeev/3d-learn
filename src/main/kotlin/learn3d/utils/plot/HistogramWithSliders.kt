@@ -19,15 +19,8 @@ class HistogramWithSliders(
         chart.addSeries(seriesName, listOf(0), listOf(0))
         params["range"] = 10
         val rangeSlider = SliderWrapper(
-                { event ->
-                    val src = event.source as ScaledSlider
-                    params["range"] = src.scaledValue.toLong()
-                },
-                10,
-                9,
-                "Range",
-                5,
-                true)
+                defaultEventChanger("range", params),
+                10, 9, 5, "Range", true)
         addSlider(rangeSlider)
     }
 

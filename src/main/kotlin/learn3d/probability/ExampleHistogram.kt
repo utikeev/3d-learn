@@ -20,7 +20,7 @@ fun bin(n: Long, k: Long) = when (n) {
 }
 
 fun main(args: Array<String>) {
-    val mFun2 = {i: Number, params: Map<String, Number> ->
+    val mFun2 = { i: Number, params: Map<String, Number> ->
         val n = params["range"]!!.toLong()
         val p = 1.0 / 2
         bin(n, i.toLong()) * p.pow(i.toInt()) * (1 - p).pow((n - i.toInt()).toDouble())

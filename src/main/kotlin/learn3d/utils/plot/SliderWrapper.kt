@@ -6,8 +6,8 @@ import javax.swing.event.ChangeEvent
 class SliderWrapper(changeListener: (event: ChangeEvent) -> Unit,
                     center: Number = 50.0,
                     range: Number = 50.0,
-                    val name: String = "Slider",
                     initialValue: Int = 50,
+                    val name: String = "Slider",
                     integerValues: Boolean = false) {
     val slider: JSlider =
             if (integerValues) IntegerJSlider (center, range, initialValue)
