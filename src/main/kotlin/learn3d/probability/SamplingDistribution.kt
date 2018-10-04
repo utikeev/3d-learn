@@ -16,7 +16,7 @@ const val MAX_FREQ = 50
 
 fun main(args: Array<String>) {
     val minSampleSize = args[0].toInt()
-    val maxSimpleSize = args[1].toInt()
+    val maxSampleSize = args[1].toInt()
     var popMean = .0
     var popVar = .0
     var popSize = 0
@@ -34,9 +34,12 @@ fun main(args: Array<String>) {
     println("Size: $popSize, Mean: $popMean, Var: $popVar")
 
     val samples = 1000
+    var expectedDistrMean = .0
+    var expectedDistVar = .0
     val meanCount = (0..20).map { 0 }.toMutableList()
     val points = (0 until samples).map { _ ->
-        val n = ThreadLocalRandom.current().nextInt(minSampleSize, maxSimpleSize + 1)
+        //val n = ThreadLocalRandom.current().nextInt(minSampleSize, maxSimpleSize + 1)
+        val n = maxSampleSize
         var sampleMean = .0
         var sampleVar = .0
         (0 until n).forEach { _ ->
@@ -56,15 +59,22 @@ fun main(args: Array<String>) {
         sampleVar /= n
         sampleVar -= sampleMean * sampleMean
         meanCount[round(sampleMean).toInt()]++
+        expectedDistrMean += sampleMean
+        expectedDistVar += sampleMean * sampleMean
 
         val c1 = listOf(1, 0, 0)
         val c2 = listOf(0, 0, 1)
-        val t = (n - minSampleSize).toDouble() / (maxSimpleSize - minSampleSize + 1)
+        val t = (n - minSampleSize).toDouble() / (maxSampleSize - minSampleSize + 1)
         val r = c1[0] * (1 - t) + c2[0] * t
         val g = c1[1] * (1 - t) + c2[1] * t
         val b = c1[2] * (1 - t) + c2[2] * t
         "$sampleMean $sampleVar $r $g $b"
     }
+
+    expectedDistrMean /= samples
+    expectedDistVar /= samples
+    expectedDistVar -= expectedDistrMean * expectedDistrMean
+
     val g = CategoryChartBuilder().
             width(600).
             height(400).
@@ -73,6 +83,8 @@ fun main(args: Array<String>) {
             build()
     g.addSeries("Sample distribution", (0..20).toList(), meanCount)
     SwingWrapper(g).displayChart()
+
+    println("Expected mean: $expectedDistrMean, expected variance: $expectedDistVar")
 
     val file = Paths.get("sampling.plt")
     Files.write(file, points)
