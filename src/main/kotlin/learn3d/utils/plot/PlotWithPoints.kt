@@ -1,9 +1,6 @@
 package learn3d.utils.plot
 
 import learn3d.utils.RGBColor
-import java.io.File
-import java.io.FileWriter
-import java.io.PrintWriter
 import java.nio.file.Files
 import java.nio.file.Paths
 
@@ -32,8 +29,8 @@ class PlotWithPoints(
 
     private fun lineStrings(): List<String> = lines.map {
         when (it.horizontal) {
-            true -> "set arrow from graph 0,first ${it.coord} to graph 1,first ${it.coord} nohead"
-            false -> "set arrow from ${it.coord},graph(0,0) to ${it.coord},graph(1,1) nohead"
+            true -> "set arrow from graph 0,first ${it.coord} to graph 1,first ${it.coord} nohead;"
+            false -> "set arrow from ${it.coord},graph(0,0) to ${it.coord},graph(1,1) nohead;"
         }
     }
 
@@ -48,27 +45,27 @@ class PlotWithPoints(
         Files.write(file, strings)
     }
 
-    private fun printInstructions() {
-        val fileGP = File("$name.gp")
-        val out = PrintWriter(FileWriter(fileGP))
-        out.println("rgb(r, g, b) = 65536 * int(r * 255) + 256 *  int(g * 255) + int(b * 255)")
-        out.println("set title \"$name\"")
-        out.println("set xlabel \"$xLabel\"")
-        out.println("set ylabel \"$yLabel\"")
-        out.println("set size ratio 1")
-        additionalInstructions.forEach { out.println(it) }
-        lineStrings().forEach { out.println(it) }
-        out.println("plot \"$name.plt\" using 1:2:(rgb(\$3, \$4, \$5)) with points lc rgb variable")
-        out.println("pause mouse close")
-        out.close()
+    private fun printInstructions(): String {
+        val lines = mutableListOf<String>()
+        lines.add("rgb(r, g, b) = 65536 * int(r * 255) + 256 *  int(g * 255) + int(b * 255);")
+        lines.add("set title \"$name\";")
+        lines.add("set xlabel \"$xLabel\";")
+        lines.add("set ylabel \"$yLabel\";")
+        lines.add("set size ratio 1;")
+        lines.addAll(additionalInstructions)
+        lines.addAll(lineStrings())
+        lines.add("plot \"$name.plt\" using 1:2:(rgb(\$3, \$4, \$5)) with points lc rgb variable;")
+        lines.add("pause mouse close;")
+        return lines
+                .joinToString(separator = "")
+                .replace("\"", "\\\"")
+                .replace("\$", "\\\$")
     }
 
     fun show() {
         printData()
-        printInstructions()
-        val prompt = Runtime.getRuntime()
-        val proc = prompt.exec("gnuplot --persist $name.gp")
-        val exit = proc.waitFor()
+        val p = ProcessBuilder("/bin/sh", "-c", "/usr/bin/gnuplot --persist -e \"${printInstructions()}\"")
+        val exit = p.start().waitFor()
         println(exit)
     }
 }
