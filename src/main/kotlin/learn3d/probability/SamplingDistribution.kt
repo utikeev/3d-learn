@@ -1,13 +1,10 @@
 package learn3d.probability
 
+import learn3d.utils.RGBColor
+import learn3d.utils.plot.PlotWithPoints
 import org.knowm.xchart.CategoryChartBuilder
 import org.knowm.xchart.SwingWrapper
-import java.io.File
-import java.io.FileWriter
-import java.io.PrintWriter
 import java.lang.Math.round
-import java.nio.file.Files
-import java.nio.file.Paths
 import java.util.concurrent.ThreadLocalRandom
 
 const val MAX_NUM = 20
@@ -37,12 +34,15 @@ fun main(args: Array<String>) {
     var expectedDistrMean = .0
     var expectedDistVar = .0
     val meanCount = (0..20).map { 0 }.toMutableList()
-    val points = (0 until samples).map { _ ->
+    val xs = mutableListOf<Double>()
+    val ys = mutableListOf<Double>()
+    val colors = mutableListOf<RGBColor>()
+    (0 until samples).forEach { _ ->
         //val n = ThreadLocalRandom.current().nextInt(minSampleSize, maxSimpleSize + 1)
         val n = maxSampleSize
         var sampleMean = .0
         var sampleVar = .0
-        (0 until n).forEach { _ ->
+        (0 until n).forEach { it ->
             var item = ThreadLocalRandom.current().nextInt(0, popSize)
             run breaker@ {
                 (0..MAX_NUM).forEach { k ->
@@ -68,7 +68,9 @@ fun main(args: Array<String>) {
         val r = c1[0] * (1 - t) + c2[0] * t
         val g = c1[1] * (1 - t) + c2[1] * t
         val b = c1[2] * (1 - t) + c2[2] * t
-        "$sampleMean $sampleVar $r $g $b"
+        xs.add(sampleMean)
+        ys.add(sampleVar)
+        colors.add(RGBColor.create(r, g, b))
     }
 
     expectedDistrMean /= samples
@@ -86,23 +88,14 @@ fun main(args: Array<String>) {
 
     println("Expected mean: $expectedDistrMean, expected variance: $expectedDistVar")
 
-    val file = Paths.get("sampling.plt")
-    Files.write(file, points)
-
-    //TODO: gnuplot lib?
-    val fileGP = File("sampling.gp")
-    val out = PrintWriter(FileWriter(fileGP))
-    out.println("rgb(r, g, b) = 65536 * int(r * 255) + 256 *  int(g * 255) + int(b * 255)")
-    out.println("set title \"Sampling\"")
-    out.println("set xlabel \"Sample mean\"")
-    out.println("set ylabel \"Sample variance\"")
-    out.println("set arrow from $popMean, graph 0 to $popMean, graph 1 nohead")
-    out.println("plot \"sampling.plt\" using 1:2:(rgb(\$3, \$4, \$5)) with points lc rgb variable, $popVar title \"\"")
-    out.println("pause mouse close")
-    out.close()
-
-    val prompt = Runtime.getRuntime()
-    val proc = prompt.exec("gnuplot --persist sampling.gp")
-    val exit = proc.waitFor()
-    println(exit)
+    val g2 = PlotWithPoints(
+            xs,
+            ys,
+            "Sampling",
+            "Sample mean",
+            "Sample variance",
+            colors)
+            .addHorizontalLine(popVar)
+            .addVerticalLine(popMean)
+    g2.show()
 }
