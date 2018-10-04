@@ -1,8 +1,11 @@
 package learn3d.probability
 
+import org.knowm.xchart.CategoryChartBuilder
+import org.knowm.xchart.SwingWrapper
 import java.io.File
 import java.io.FileWriter
 import java.io.PrintWriter
+import java.lang.Math.round
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.concurrent.ThreadLocalRandom
@@ -10,10 +13,10 @@ import java.util.concurrent.ThreadLocalRandom
 const val MAX_NUM = 20
 const val MAX_FREQ = 50
 
-const val MIN_SAMPLE_SIZE = 16
-const val MAX_SAMPLE_SIZE = 32
 
 fun main(args: Array<String>) {
+    val minSampleSize = args[0].toInt()
+    val maxSimpleSize = args[1].toInt()
     var popMean = .0
     var popVar = .0
     var popSize = 0
@@ -31,8 +34,9 @@ fun main(args: Array<String>) {
     println("Size: $popSize, Mean: $popMean, Var: $popVar")
 
     val samples = 1000
+    val meanCount = (0..20).map { 0 }.toMutableList()
     val points = (0 until samples).map { _ ->
-        val n = ThreadLocalRandom.current().nextInt(MIN_SAMPLE_SIZE, MAX_SAMPLE_SIZE + 1)
+        val n = ThreadLocalRandom.current().nextInt(minSampleSize, maxSimpleSize + 1)
         var sampleMean = .0
         var sampleVar = .0
         (0 until n).forEach { _ ->
@@ -51,15 +55,25 @@ fun main(args: Array<String>) {
         sampleMean /= n
         sampleVar /= n
         sampleVar -= sampleMean * sampleMean
+        meanCount[round(sampleMean).toInt()]++
 
         val c1 = listOf(1, 0, 0)
         val c2 = listOf(0, 0, 1)
-        val t = (n - MIN_SAMPLE_SIZE).toDouble() / (MAX_SAMPLE_SIZE - MIN_SAMPLE_SIZE)
+        val t = (n - minSampleSize).toDouble() / (maxSimpleSize - minSampleSize)
         val r = c1[0] * (1 - t) + c2[0] * t
         val g = c1[1] * (1 - t) + c2[1] * t
         val b = c1[2] * (1 - t) + c2[2] * t
         "$sampleMean $sampleVar $r $g $b"
     }
+    val g = CategoryChartBuilder().
+            width(600).
+            height(400).
+            xAxisTitle("Number").
+            yAxisTitle("# of times").
+            build()
+    g.addSeries("Sample distribution", (0..20).toList(), meanCount)
+    SwingWrapper(g).displayChart()
+
     val file = Paths.get("sampling.plt")
     Files.write(file, points)
 
