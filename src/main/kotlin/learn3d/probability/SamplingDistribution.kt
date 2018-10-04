@@ -59,7 +59,7 @@ fun main(args: Array<String>) {
 
         val c1 = listOf(1, 0, 0)
         val c2 = listOf(0, 0, 1)
-        val t = (n - minSampleSize).toDouble() / (maxSimpleSize - minSampleSize)
+        val t = (n - minSampleSize).toDouble() / (maxSimpleSize - minSampleSize + 1)
         val r = c1[0] * (1 - t) + c2[0] * t
         val g = c1[1] * (1 - t) + c2[1] * t
         val b = c1[2] * (1 - t) + c2[2] * t
