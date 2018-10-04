@@ -31,7 +31,6 @@ fun main(args: Array<String>) {
     println("Size: $popSize, Mean: $popMean, Var: $popVar")
 
     val samples = 1000
-    //TODO: find error
     val points = (0 until samples).map { _ ->
         val n = ThreadLocalRandom.current().nextInt(MIN_SAMPLE_SIZE, MAX_SAMPLE_SIZE + 1)
         var sampleMean = .0
@@ -72,7 +71,7 @@ fun main(args: Array<String>) {
     out.println("set xlabel \"Sample mean\"")
     out.println("set ylabel \"Sample variance\"")
     out.println("set arrow from $popMean, graph 0 to $popMean, graph 1 nohead")
-    out.println("plot \"sampling.plt\" using 1:2:(rgb(\$3, \$4, \$5)) with points lc rgb variable")
+    out.println("plot \"sampling.plt\" using 1:2:(rgb(\$3, \$4, \$5)) with points lc rgb variable, $popVar title \"\"")
     out.println("pause mouse close")
     out.close()
 
