@@ -1,4 +1,4 @@
-package learn3d.utils.plot
+package learn3d.utils
 
 import kotlin.math.PI
 import kotlin.math.exp

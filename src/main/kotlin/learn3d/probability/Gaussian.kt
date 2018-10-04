@@ -3,7 +3,7 @@ package learn3d.probability
 import learn3d.utils.plot.SliderWrapper
 import learn3d.utils.plot.XYChartWithSliders
 import learn3d.utils.plot.defaultEventChanger
-import learn3d.utils.plot.normal
+import learn3d.utils.normal
 
 fun main(args: Array<String>) {
     val mParams = mutableMapOf<String, Number>("sigma" to 1.0, "mu" to .0)

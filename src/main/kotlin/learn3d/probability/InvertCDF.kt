@@ -1,6 +1,6 @@
 package learn3d.probability
 
-import learn3d.utils.plot.normal
+import learn3d.utils.normal
 import org.knowm.xchart.QuickChart
 import org.knowm.xchart.SwingWrapper
 import java.util.concurrent.ThreadLocalRandom
