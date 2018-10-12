@@ -48,7 +48,7 @@ fun main(args: Array<String>) {
     }
 
     val g = QuickChart.getChart(
-            "InvertCD", "x", "ys", "cdf",
+            "InvertCDF", "x", "ys", "cdf",
             (0 until numBins).map { 5 * (2 * it.toDouble() / numBins - 1) },
             (0 until numBins).map { bins[it].toDouble() / numSims })
     SwingWrapper(g).displayChart()

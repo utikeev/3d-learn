@@ -42,7 +42,7 @@ fun main(args: Array<String>) {
         val n = maxSampleSize
         var sampleMean = .0
         var sampleVar = .0
-        (0 until n).forEach { it ->
+        (0 until n).forEach { _ ->
             var item = ThreadLocalRandom.current().nextInt(0, popSize)
             run breaker@ {
                 (0..MAX_NUM).forEach { k ->
