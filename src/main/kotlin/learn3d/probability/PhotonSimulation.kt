@@ -86,14 +86,16 @@ fun photonSim(): DoubleArray {
 
 fun main(args: Array<String>) {
     val nPasses = if (args.isNotEmpty()) args[0].toInt() else 128
-    val pixels = DoubleArray(width * height)
+    val pixels = DoubleArray(width * height) { .0 }
 
     val startTime = System.nanoTime()
     val recordList = mutableListOf<DoubleArray>()
     val jobs = List(nPasses) {
         GlobalScope.launch {
             recordList.add(photonSim())
-            print(".")
+            if (recordList.size % 10 == 0) {
+                print(".")
+            }
         }
     }
     runBlocking {
