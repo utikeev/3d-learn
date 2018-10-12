@@ -1,9 +1,9 @@
 package learn3d.probability
 
+import learn3d.utils.drand
 import learn3d.utils.normal
 import org.knowm.xchart.QuickChart
 import org.knowm.xchart.SwingWrapper
-import java.util.concurrent.ThreadLocalRandom
 
 
 fun main(args: Array<String>) {
@@ -30,7 +30,7 @@ fun main(args: Array<String>) {
     }
     println("Sum: $sum")
     val sample = {
-        val r = ThreadLocalRandom.current().nextDouble()
+        val r = drand()
         val off = cdf.indexOfLast { it < r }
         val t = (r - cdf[off]) / (cdf[off + 1] - cdf[off])
         val x = (off + t) / nBins

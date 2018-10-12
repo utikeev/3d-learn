@@ -2,8 +2,8 @@ package learn3d.probability
 
 import learn3d.geometry.le
 import learn3d.utils.RGBColor
+import learn3d.utils.drand
 import learn3d.utils.plot.PlotWithPoints
-import java.util.concurrent.ThreadLocalRandom
 import kotlin.math.sqrt
 
 fun main(args: Array<String>) {
@@ -13,8 +13,8 @@ fun main(args: Array<String>) {
     val ys = mutableListOf<Double>()
     val colors = mutableListOf<RGBColor>()
     (0..n).forEach { _ ->
-        val x = ThreadLocalRandom.current().nextDouble(-1.0, 1.0)
-        val y = ThreadLocalRandom.current().nextDouble(-1.0, 1.0)
+        val x = drand(-1.0, 1.0)
+        val y = drand(-1.0, 1.0)
         val l = sqrt(x * x + y * y)
         if (l le 1) hits++
         val r = if (l le 1) 0 else 1

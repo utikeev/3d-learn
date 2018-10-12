@@ -1,11 +1,11 @@
 package learn3d.probability
 
 import learn3d.utils.RGBColor
+import learn3d.utils.intrand
 import learn3d.utils.plot.PlotWithPoints
 import org.knowm.xchart.CategoryChartBuilder
 import org.knowm.xchart.SwingWrapper
 import java.lang.Math.round
-import java.util.concurrent.ThreadLocalRandom
 
 const val MAX_NUM = 20
 const val MAX_FREQ = 50
@@ -18,7 +18,7 @@ fun main(args: Array<String>) {
     var popVar = .0
     var popSize = 0
     val population = (0..MAX_NUM).map {
-        val i = ThreadLocalRandom.current().nextInt(1, MAX_FREQ + 1)
+        val i = intrand(1, MAX_FREQ + 1)
         popSize += i
         popMean += it * i
         popVar += it * it * i
@@ -38,12 +38,12 @@ fun main(args: Array<String>) {
     val ys = mutableListOf<Double>()
     val colors = mutableListOf<RGBColor>()
     (0 until samples).forEach { _ ->
-        //val n = ThreadLocalRandom.current().nextInt(minSampleSize, maxSimpleSize + 1)
+        //val n = intrand(minSampleSize, maxSimpleSize + 1)
         val n = maxSampleSize
         var sampleMean = .0
         var sampleVar = .0
         (0 until n).forEach { _ ->
-            var item = ThreadLocalRandom.current().nextInt(0, popSize)
+            var item = intrand(0, popSize)
             run breaker@ {
                 (0..MAX_NUM).forEach { k ->
                     item -= population[k]

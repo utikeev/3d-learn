@@ -1,16 +1,16 @@
 package learn3d.probability
 
+import learn3d.utils.intrand
 import org.knowm.xchart.CategoryChartBuilder
 import org.knowm.xchart.QuickChart
 import org.knowm.xchart.SwingWrapper
-import java.util.concurrent.ThreadLocalRandom
 
 fun main(args: Array<String>) {
     var sum = 0
     val xs = (1..20000).toList()
     val ys2 = mutableListOf(0, 0, 0, 0, 0, 0)
     val ys1 = xs.map {
-        val ran = ThreadLocalRandom.current().nextInt(1, 7)
+        val ran = intrand(1, 7)
         sum += ran
         ys2[ran - 1]++
         sum.toDouble() / it
