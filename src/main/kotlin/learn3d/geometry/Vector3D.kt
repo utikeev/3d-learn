@@ -93,3 +93,7 @@ class Vector3D {
 
     override fun toString(): String = "[${DF.format(x)}, ${DF.format(y)}, ${DF.format(z)}]"
 }
+
+operator fun Number.times(v: Vector3D): Vector3D = v * this
+operator fun Number.plus(v: Vector3D): Vector3D = v + this
+operator fun Number.minus(v: Vector3D): Vector3D = v - this
