@@ -85,7 +85,7 @@ fun photonSim(): DoubleArray {
 }
 
 fun main(args: Array<String>) {
-    val nPasses = 128
+    val nPasses = if (args.isNotEmpty()) args[0].toInt() else 128
     val pixels = DoubleArray(width * height)
 
     val startTime = System.nanoTime()
