@@ -1,6 +1,6 @@
 package learn3d.geometry
 
-import java.util.Objects
+import java.util.*
 import kotlin.math.*
 
 class Vector3D {
@@ -66,6 +66,7 @@ class Vector3D {
         return Vector3D(x * dr, y * dr, z * dr)
     }
     operator fun times(m: Matrix44): Vector3D = m * this
+    operator fun times(v: Vector3D): Vector3D = Vector3D(x * v.x, y * v.y, z * v.z)
     infix fun vecTimes(m: Matrix44): Vector3D = m vecTimes this
     override operator fun equals(other: Any?): Boolean {
         return other is Vector3D && other.x eq x && other.y eq y && other.z eq z
