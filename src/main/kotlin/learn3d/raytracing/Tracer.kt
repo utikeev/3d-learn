@@ -4,7 +4,7 @@ import learn3d.geometry.*
 import learn3d.utils.INFINITY
 import learn3d.utils.RGBColor
 import learn3d.utils.mix
-import java.io.File
+import java.io.FileOutputStream
 import kotlin.math.*
 
 const val MAX_RAY_DEPTH = 5
@@ -90,13 +90,21 @@ fun render(spheres: List<Sphere>) {
             image[curPixel++] = RGBColor.createFromVector(trace(Vector3D(), rayDir, spheres, 0))
         }
     }
-    File("raytracing.ppm").printWriter().use { out ->
-        out.write("P3\n$width $height\n255\n")
-        for (pixel in image) {
-            val r = (min(1.0, pixel.r) * 255).toInt()
-            val g = (min(1.0, pixel.g) * 255).toInt()
-            val b = (min(1.0, pixel.b) * 255).toInt()
-            out.write("$r $g $b\n")
+    val fos = FileOutputStream("raytracing.ppm")
+    val buffer = ByteArray(width * 3)
+    fos.use {
+        val header = "P6\n$width $height\n255\n".toByteArray()
+        with (it) {
+            write(header)
+            for (y in 0 until height) {
+                for (x in 0 until width) {
+                    val c = image[y * width + x]
+                    buffer[x * 3] = (min(1.0, c.r) * 255).toByte()
+                    buffer[x * 3 + 1] = (min(1.0, c.g) * 255).toByte()
+                    buffer[x * 3 + 2] = (min(1.0, c.b) * 255).toByte()
+                }
+                write(buffer)
+            }
         }
     }
 }
